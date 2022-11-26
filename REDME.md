@@ -32,16 +32,17 @@ export const mysqlDataSource = new DataSource({
     ],
 });
 ```
+
+`MYSQL_DATABASE_NAME = grandysoft`
 If you want to use other name the database?
 You must change the name in `.env` file.
-
-###`MYSQL_DATABASE_NAME = grandysoft`
 
 ---
 
 ### `npm run migration:run`
 After that we run the script.
 It will create our database and tables;
+
 ---
 
 ### `npm run seed`
