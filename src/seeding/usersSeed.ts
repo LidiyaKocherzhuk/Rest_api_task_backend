@@ -1,9 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { createConnection } from 'typeorm';
 
-import UserEntity from '../entity/userEntity';
-import { userRepository, subscriptionRepository } from '../reposirories';
-import { FriendsEntity } from '../entity';
+import { mysqlDataSource } from '../config';
+import { userRepository, friendRepository } from '../reposirories';
+import { FriendsEntity, UserEntity } from '../entity';
 
 export const createData = async (): Promise<void> => {
     const users = [];
@@ -32,7 +31,7 @@ const createSubscriptions = async (users: Array<UserEntity>): Promise<void> => {
         subscription.userId = userId;
         subscription.friendId = friendId;
 
-        await subscriptionRepository.save(subscription);
+        await friendRepository.save(subscription);
     }
 };
 
@@ -48,7 +47,7 @@ const compareId = (usersIds: number[]): {userId: number, friendId: number} => {
 
 (async function (): Promise<void> {
     try {
-        await createConnection();
+        await mysqlDataSource.initialize();
         await createData();
         await process.exit();
     } catch (e) {

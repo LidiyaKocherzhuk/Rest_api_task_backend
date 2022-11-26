@@ -5,7 +5,7 @@ import {
 } from 'typeorm';
 
 import { config } from '../config';
-import CommonEntity, { ICommon } from './commonEntity';
+import { CommonEntity, ICommon } from './commonEntity';
 import { FriendsEntity } from './friendsEntity';
 
 export interface IUserExtend extends ICommon {
@@ -19,7 +19,7 @@ export interface IUser {
 }
 
 @Entity('users', { database: config.MYSQL_DATABASE_NAME })
-export default class UserEntity extends CommonEntity implements IUserExtend {
+export class UserEntity extends CommonEntity implements IUserExtend {
     @Column({
         type: 'varchar',
         width: 50,

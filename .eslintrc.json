@@ -30,13 +30,14 @@
                 "varsIgnorePattern": "^[A-Z]"
             }
         ],
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "class-methods-use-this": "off",
         "consistent-return": "off",
-        "no-underscore-dangle": "off",
         "no-plusplus": "off",
         "no-await-in-loop": "off",
         "no-unreachable-loop": "off",
         "no-use-before-define": "off",
+        "no-param-reassign": "off",
         "guard-for-in": "off",
         "no-restricted-syntax": "off",
         "no-shadow": "off",

@@ -1,7 +1,6 @@
 import express from 'express';
-import { createConnection } from 'typeorm';
 
-import { config } from './config';
+import { config, mysqlDataSource } from './config';
 import { apiRouter } from './routers';
 
 const app = express();
@@ -15,7 +14,7 @@ app.listen(PORT, async () => {
     console.log(`Server has started on port ${PORT}!`);
 
     try {
-        const connection = await createConnection();
+        const connection = await mysqlDataSource.initialize();
         if (connection) {
             console.log('database connected');
         }

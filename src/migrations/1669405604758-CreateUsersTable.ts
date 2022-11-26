@@ -8,7 +8,7 @@ export class CreateUsersTable1669405604758 implements MigrationInterface {
                 first_name VARCHAR(50) NOT NULL,
                 gender VARCHAR(10) NOT NULL,
                 createdAt TIMESTAMP DEFAULT(UTC_TIMESTAMP()) NOT NULL,
-                deletedAt TIMESTAMP
+                deletedAt TIMESTAMP NULL
             )
         `);
     }

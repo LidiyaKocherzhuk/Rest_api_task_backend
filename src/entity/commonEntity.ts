@@ -15,7 +15,7 @@ export interface ICommon {
 }
 
 @Entity('users', { database: config.MYSQL_DATABASE_NAME })
-export default class CommonEntity implements ICommon {
+export class CommonEntity implements ICommon {
     @PrimaryGeneratedColumn()
         id:number;
 

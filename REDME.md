@@ -2,7 +2,7 @@
 
 In the project directory, you can run:
 
-### `npm install`
+### `npm install` or `yarn install`
 At first we install npm dependencies
 
 ---

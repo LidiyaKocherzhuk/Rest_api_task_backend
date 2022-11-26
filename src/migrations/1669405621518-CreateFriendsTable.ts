@@ -8,7 +8,7 @@ export class CreateFriendsTable1669405621518 implements MigrationInterface {
                 userId INT NOT NULL,
                 friendId INT NOT NULL,
                 createdAt TIMESTAMP DEFAULT(UTC_TIMESTAMP()) NOT NULL,
-                deletedAt TIMESTAMP
+                deletedAt TIMESTAMP NULL
             )
         `);
     }

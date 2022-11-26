@@ -16,27 +16,25 @@
     "lint": "eslint --cache --ext .js,.ts src",
     "lint:fix": "npm run lint -- --fix",
     "typeorm": "node -r ts-node/register ./node_modules/typeorm/cli.js",
-    "migration:generate": "typeorm migration:create -n",
-    "migration:run": "npm run typeorm migration:run",
-    "migration:revert": "npm run typeorm migration:revert"
+    "migration:generate": "typeorm migration:create src/migrations/*.ts -d src/config/ormconfig.ts -n",
+    "migration:run": "npm run typeorm migration:run -- -d src/config/ormconfig.ts",
+    "migration:revert": "npm run typeorm migration:revert -- -d src/config/ormconfig.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
-    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "mysql2": "^2.3.3",
     "node": "^19.1.0",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.43",
+    "typeorm": "^0.3.10",
     "typeorm-extension": "^2.2.13"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
-    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.19",
     "@typescript-eslint/eslint-plugin": "^5.43.0",

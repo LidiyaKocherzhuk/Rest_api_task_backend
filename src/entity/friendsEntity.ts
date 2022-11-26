@@ -6,8 +6,8 @@ import {
 } from 'typeorm';
 
 import { config } from '../config';
-import CommonEntity, { ICommon } from './commonEntity';
-import UserEntity from './userEntity';
+import { CommonEntity, ICommon } from './commonEntity';
+import { UserEntity } from './userEntity';
 
 export interface IFriendsExtend extends ICommon {
     userId: number;
