@@ -5,8 +5,6 @@ In the project directory, you can run:
 ### `npm install` or `yarn install`
 At first we install npm dependencies.
 
----
-
 In the project we use MySQL Database and the nex step we must
 go into `src/config/ormconfig.ts` file and add our personal `username` and `password`
 
@@ -37,18 +35,12 @@ export const mysqlDataSource = new DataSource({
 If you want to use other name the database?
 You must change the name in `.env` file.
 
----
-
 ### `npm run migration:run`
 After that we run the script.
 It will create our database and tables;
 
----
-
 ### `npm run seed`
 Generate data to database;
-
----
 
 ### `npm run start`
 And start the app;
