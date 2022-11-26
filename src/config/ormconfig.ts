@@ -1,12 +1,13 @@
 import { DataSource } from 'typeorm';
+import { config } from './config';
 
 export const mysqlDataSource = new DataSource({
     type: 'mysql',
     host: 'localhost',
     port: 3306,
-    username: '*****',
-    password: '*****',
-    database: 'grandysoft',
+    username: 'root',
+    password: 'LiDiYa',
+    database: config.MYSQL_DATABASE_NAME,
     synchronize: false,
     logging: false,
     entities: [

@@ -28,6 +28,16 @@ class UserRepository {
             });
     }
 
+    getAllFriends(
+        ids: number[],
+    ): Promise<UserEntity[] | IUserWithFriends[]> {
+        return mysqlDataSource
+            .getRepository(UserEntity)
+            .createQueryBuilder(`user`)
+            .where(`user.id IN(:...ids)`, { ids })
+            .getMany();
+    }
+
     getFriends(
         ids: number[],
         userId: number,

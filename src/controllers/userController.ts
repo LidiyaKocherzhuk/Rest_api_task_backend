@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 
-import { userRepository } from '../reposirories';
 import { userService } from '../services';
 
 class UserController {
     async getAll(req: Request, res: Response): Promise<void> {
         try {
-            const users = await userRepository.getAll();
+            const users = await userService.getAll();
             res.status(200)
                 .json(users);
         } catch (error) {

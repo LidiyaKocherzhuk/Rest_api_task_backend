@@ -3,36 +3,40 @@
 In the project directory, you can run:
 
 ### `npm install` or `yarn install`
-At first we install npm dependencies
+At first we install npm dependencies.
 
 ---
 
 In the project we use MySQL Database and the nex step we must
-go into ormconfig.json ang add our personal `username` and `password`
+go into `src/config/ormconfig.ts` file and add our personal `username` and `password`
+
+Also in MySQL Schemas we create new database, run the script - `create database grandysoft;`
 
 ```js
-{
-    "type": "mysql",
-        "host": "localhost",
-        "port": 3306,
-        "username": "your MySQL username!!!",
-        "password": "your MySQL password!!!",
-        "database": "grandysoft",
-        "synchronize": false,
-        "logging": false,
-        "entities": [
-        "src/entity/**/*.ts"
+export const mysqlDataSource = new DataSource({
+    type: 'mysql',
+    host: 'localhost',
+    port: 3306,
+    username: 'root',
+    password: 'LiDiYa',
+    database: config.MYSQL_DATABASE_NAME,
+    synchronize: false,
+    logging: false,
+    entities: [
+        'src/entity/**/*.ts',
     ],
-        "migrations": [
-        "src/migrations/**/*.ts"
+    migrations: [
+        'src/migrations/**/*.ts',
     ],
-        "subscribers": [
+    subscribers: [
     ],
-        "cli": {
-        "migrationsDir": "src/migrations"
-    }
-}
+});
 ```
+If you want to use other name the database?
+You must change the name in `.env` file.
+
+###`MYSQL_DATABASE_NAME = grandysoft`
+
 ---
 
 ### `npm run migration:run`
