@@ -21,9 +21,9 @@ class UserController {
             const user = await userService.getById(Number(userId), query);
 
             res.status(200)
-                .json({
+                .json(
                     user,
-                });
+                );
         } catch (error) {
             next(error);
         }

@@ -43,4 +43,6 @@ It will create our database and tables;
 Generate data to database;
 
 ### `npm run start`
-And start the app;
+Start the app;
+
+And start the client side link: https://github.com/LidiyaKocherzhuk/Rest_api_frontend;

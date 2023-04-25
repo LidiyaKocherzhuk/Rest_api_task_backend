@@ -42,8 +42,8 @@ class UserService {
     async getById(id: number, query: IQuery): Promise<IUserWithFriends | undefined> {
         try {
             const {
-                order_by,
-                order_type,
+                order_by = `id`,
+                order_type = `ASC`,
             } = query;
 
             const user = await userRepository.getById(id);
@@ -59,8 +59,8 @@ class UserService {
                     friends = await userRepository.getFriends(
                         friendId,
                         user.id,
-                        order_by || `id`,
-                        order_type || `ASC`,
+                        order_by,
+                        order_type,
                     ) as IUserWithFriends[];
                 }
 
@@ -74,9 +74,9 @@ class UserService {
                         friends,
                     };
                 }
-                throw new ErrorHandler('Users friend each other does not exist!');
+                return undefined;
             }
-            throw new ErrorHandler('User with this id does not exist!');
+            return undefined;
         } catch (error) {
             throw new ErrorHandler(error.message, error.status);
         }
