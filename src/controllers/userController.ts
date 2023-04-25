@@ -1,19 +1,19 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import { userService } from '../services';
 
 class UserController {
-    async getAll(req: Request, res: Response): Promise<void> {
+    async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const users = await userService.getAll();
             res.status(200)
                 .json(users);
         } catch (error) {
-            res.json(error);
+            next(error);
         }
     }
 
-    async getById(req: Request, res: Response): Promise<void> {
+    async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { userId } = req.params;
             const { query } = req;
@@ -25,13 +25,14 @@ class UserController {
                     user,
                 });
         } catch (error) {
-            res.json(error);
+            next(error);
         }
     }
 
     async getMaxFollowing(
         req: Request,
         res: Response,
+        next: NextFunction,
     ): Promise<void> {
         try {
             const users = await userService.getMaxFollowing();
@@ -39,13 +40,14 @@ class UserController {
             res.json(users)
                 .status(200);
         } catch (error) {
-            res.json(error);
+            next(error);
         }
     }
 
     async getNotFollowing(
         req: Request,
         res: Response,
+        next: NextFunction,
     ): Promise<void> {
         try {
             const users = await userService.getNotFollowing();
@@ -53,7 +55,7 @@ class UserController {
             res.json(users)
                 .status(200);
         } catch (error) {
-            res.json(error);
+            next(error);
         }
     }
 }

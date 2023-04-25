@@ -46,8 +46,8 @@ class UserRepository {
     ): Promise<UserEntity[] | IUserWithFriends[]> {
         return mysqlDataSource
             .getRepository(UserEntity)
-            .createQueryBuilder(`user`)
-            .where(`user.id IN(:...ids)`, { ids })
+            .createQueryBuilder('user')
+            .where('user.id IN (:ids)', { ids: [...ids] })
             .leftJoinAndSelect('user.friends', `friends`)
             .andWhere('friends.friendId = :userId', { userId })
             .orderBy(`user.${order_by}`, order_type)

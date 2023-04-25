@@ -1,69 +1,85 @@
 import { userRepository } from '../reposirories';
 import { IQuery, IUserCount, IUserWithFriends } from '../intefaces';
+import { ErrorHandler } from '../errors';
+import { IUser } from '../entity';
 
 class UserService {
-    async getAll() {
-        const users = await userRepository.getAll();
-        const usersWithFriends = [] as IUserWithFriends[];
+    async getAll(): Promise<IUser[]> {
+        try {
+            const users = await userRepository.getAll();
+            const usersWithFriends = [] as IUserWithFriends[];
 
-        for (const user of users) {
-            const friendId = [] as number[];
-            let friends = [] as IUserWithFriends[];
+            for (const user of users) {
+                const friendId = [] as number[];
+                let friends = [] as IUserWithFriends[];
 
-            for (const item of user.friends) {
-                friendId.push(item.friendId);
+                for (const item of user.friends) {
+                    friendId.push(item.friendId);
+                }
+
+                if (friendId.length) {
+                    friends = await userRepository.getAllFriends(
+                        friendId,
+                    ) as IUserWithFriends[];
+                }
+
+                friends.forEach((friend: IUserWithFriends) => {
+                    delete friend.friends;
+                });
+
+                usersWithFriends.push({
+                    ...user,
+                    friends,
+                });
             }
 
-            if (friendId.length) {
-                friends = await userRepository.getAllFriends(
-                    friendId,
-                ) as IUserWithFriends[];
-            }
-
-            friends.forEach((friend: IUserWithFriends) => {
-                delete friend.friends;
-            });
-
-            usersWithFriends.push({ ...user, friends });
+            return usersWithFriends;
+        } catch (error) {
+            throw new ErrorHandler(error.message, error.status);
         }
-
-        return usersWithFriends;
     }
 
     async getById(id: number, query: IQuery): Promise<IUserWithFriends | undefined> {
-        const {
-            order_by,
-            order_type,
-        } = query;
+        try {
+            const {
+                order_by,
+                order_type,
+            } = query;
 
-        const user = await userRepository.getById(id);
-        const friendId = [] as number[];
-        let friends = [] as IUserWithFriends[];
+            const user = await userRepository.getById(id);
+            const friendId = [] as number[];
+            let friends = [] as IUserWithFriends[];
 
-        if (user) {
-            for (const item of user.friends) {
-                friendId.push(item.friendId);
+            if (user) {
+                for (const item of user.friends) {
+                    friendId.push(item.friendId);
+                }
+
+                if (friendId.length) {
+                    friends = await userRepository.getFriends(
+                        friendId,
+                        user.id,
+                        order_by || `id`,
+                        order_type || `ASC`,
+                    ) as IUserWithFriends[];
+                }
+
+                friends.forEach((friend: IUserWithFriends) => {
+                    delete friend.friends;
+                });
+
+                if (friends.length) {
+                    return {
+                        ...user,
+                        friends,
+                    };
+                }
+                throw new ErrorHandler('Users friend each other does not exist!');
             }
-
-            if (friendId.length) {
-                friends = await userRepository.getFriends(
-                    friendId,
-                    user.id,
-                    order_by || `id`,
-                    order_type || `ASC`,
-                ) as IUserWithFriends[];
-            }
-
-            friends.forEach((friend: IUserWithFriends) => {
-                delete friend.friends;
-            });
-
-            return {
-                ...user,
-                friends,
-            };
+            throw new ErrorHandler('User with this id does not exist!');
+        } catch (error) {
+            throw new ErrorHandler(error.message, error.status);
         }
-        return undefined;
     }
 
     async getMaxFollowing(): Promise<IUserCount[]> {
@@ -74,8 +90,12 @@ class UserService {
     }
 
     async getNotFollowing(): Promise<IUserCount[]> {
-        const users = await userRepository.getFollowing() as IUserCount[];
-        return users.filter((user) => user.friendsCount < 1);
+        try {
+            const users = await userRepository.getFollowing() as IUserCount[];
+            return users.filter((user) => user.friendsCount < 1);
+        } catch (error) {
+            throw new ErrorHandler(error.message, error.status);
+        }
     }
 }
 

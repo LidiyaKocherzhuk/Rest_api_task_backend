@@ -8,7 +8,7 @@ At first we install npm dependencies.
 In the project we use MySQL Database and the nex step we must
 go into `src/config/ormconfig.ts` file and add our personal `username` and `password`
 
-Also in MySQL Schemas we create new database, run the script - `create database grandysoft;`
+Also in MySQL Schemas we create new database, run the script - `create database rest;`
 
 ```js
 export const mysqlDataSource = new DataSource({
@@ -31,7 +31,7 @@ export const mysqlDataSource = new DataSource({
 });
 ```
 
-`MYSQL_DATABASE_NAME = grandysoft`
+`MYSQL_DATABASE_NAME = rest`
 If you want to use other name the database?
 You must change the name in `.env` file.
 
